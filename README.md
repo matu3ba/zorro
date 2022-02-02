@@ -1,5 +1,7 @@
 # zorro
-bit hacks and architecture-independent compiler_rt in Zig optimized for 2s complement and verified in Z3
+Integer bit hacks and architecture-independent compiler_rt in Zig optimized for 2s complement and verified in Z3
+
+Code has 0BSD license, proofs have MIT license.
 
 WIP.
 
@@ -11,10 +13,9 @@ Folder prefixed with `p` for corresponding proofs.
 
 ## todos
 
-- [ ] figure out which license to use for bit hacks (unlicense/BSD/public domain/unlicense/MIT at your request)
 - [ ] architecture-independent compiler_rt
 - [ ] verify compiler_rt
-- [ ] list of all bit-hacks (unlicense/BSD/public domain/MIT)
-- [ ] implement common bit-hacks (unlicense/BSD/public domain/MIT)
+- [ ] list of all integer bit-hacks (0BSD)
+- [ ] implement common bit-hacks (0BSD)
 - [ ] verify common bit-hacks (MIT)
-- [ ] link or explain common theories and techniques
+- [ ] link or explain common theories and techniques (check license that arxiv uses)
