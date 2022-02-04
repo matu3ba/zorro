@@ -32,14 +32,18 @@ CC='zig cc' CXX='zig c++' cmake .. -GNinja
 ninja          # build z3 with libclang integrated in zig
 cd ..
 
-zig build      # builds
+zig build      # build binary
+# workaround of https://github.com/ziglang/zig/issues/10785
+cd zig-out
+./bin/runProofs
+cd ..
 ```
 
 ## Todos
 
 - [x] building z3
 - [x] building and linking c++ programs with z3 proofs
-- [ ] fix `zig build` to run the proves
+- [ ] fix `zig build` to run the proofs (https://github.com/ziglang/zig/issues/10785)
 - [ ] architecture-independent compiler_rt
 - [ ] verify compiler_rt
 - [ ] list of all integer bit-hacks (0BSD)

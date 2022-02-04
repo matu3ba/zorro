@@ -46,7 +46,7 @@ pub fn build(b: *std.build.Builder) void {
     const z3_inc = "./z3/src/api";
     const z3_lib = "./z3/build";
     const proof_folder = "./src/pcrt";
-    const exe = b.addExecutable("example", null);
+    const exe = b.addExecutable("runProofs", null);
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.linkLibCpp();
