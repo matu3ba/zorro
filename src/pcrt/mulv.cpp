@@ -20,20 +20,45 @@ void proof_mulv() {
 
     z3::expr rhs = (i64min <= mulres && mulres <= i64max);
 
-    //z3::expr tmp =
-    //(
-    //  1 <= a && a <= 2147483647 && 1 <= b && b <= 2147483647
-    //  && mulres == a*b
-    //  && res == z3::smod(mulres,i64max)
-    //  && res / a == b
-    //);
-    //z3::expr cond = (i64min <= mulres && mulres <= i64max);
-    //z3::expr implies = z3::implies(tmp, cond);
-
+    // a<0, b<0 => a*b > 0 => smod i64max
     {
         z3::expr lhs =
         (
           i64min <= a && a <= -1 && i64min <= b && b <= -1
+          && mulres == a*b
+          && res == z3::smod(mulres,i64max)
+          && res / a == b
+        );
+        proveImplication(ctx, forallvec, lhs, rhs);
+    }
+    // a>0, b>0 => a*b > 0 => smod i64max
+    {
+        z3::expr lhs =
+        (
+          1 <= a && a <= i64max && 1 <= b && b <= i64max
+          && mulres == a*b
+          && res == z3::smod(mulres,i64max)
+          && res / a == b
+        );
+        proveImplication(ctx, forallvec, lhs, rhs);
+    }
+
+    // a<0, b>0 => a*b < 0 => smod i64min
+    {
+        z3::expr lhs =
+        (
+          i64min <= a && a <= -1 && 1 <= b && b <= i64max
+          && mulres == a*b
+          && res == z3::smod(mulres,i64min)
+          && res / a == b
+        );
+        proveImplication(ctx, forallvec, lhs, rhs);
+    }
+    // a>0, b<0 => a*b < 0 => smod i64min
+    {
+        z3::expr lhs =
+        (
+          1 <= a && a <= i64max && i64min <= b && b <= -1
           && mulres == a*b
           && res == z3::smod(mulres,i64min)
           && res / a == b
@@ -41,12 +66,5 @@ void proof_mulv() {
         proveImplication(ctx, forallvec, lhs, rhs);
     }
 
-    //z3::expr forallexpr = z3::exists(forallvec, tmp);
-    //z3::solver solver(ctx);
-    //solver.add(forallexpr);
-    //z3::check_result proofres = solver.check();
-    //assert(proofres == z3::check_result::sat);
-    //std::cout << "sat\n";
-    //z3::model m = solver.get_model();
-    //std::cout << "model satisfiable:\n" << m << "\n";
+    printSuccess("mulv");
 }
