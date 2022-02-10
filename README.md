@@ -56,3 +56,15 @@ experiments
 - [ ] z3 c bindings used in zig
 - [ ] extract arithmetic from zig compiler of a fn block as stmlib2 string
 - [ ] generate edge cases for testing from z3 proofs
+
+## Ressources
+
+- older releases (<80) of LLVM which use MIT license.
+- https://bits.stephan-brumme.com/
+- http://aggregate.org/MAGIC/
+- http://graphics.stanford.edu/~seander/bithacks.html
+- Hacker's Delight for most common things, code https://github.com/hcs0/Hackers-Delight
+- https://www.chessprogramming.org/Bit-Twiddling
+- https://github.com/keon/awesome-bits
+- https://github.com/golang/go/issues/18616
+- https://www.fefe.de/intof.html
