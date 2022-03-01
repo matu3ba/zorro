@@ -28,7 +28,7 @@ git clone --depth=1 https://github.com/Z3Prover/z3 z3
 cd z3
 mkdir -p build
 cd build
-CC='zig cc' CXX='zig c++' cmake .. -GNinja
+CC='zig cc' CXX='zig c++' cmake -GNinja ../
 ninja          # build z3 with libclang integrated in zig
 cd ..
 

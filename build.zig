@@ -43,14 +43,16 @@ pub fn build(b: *std.build.Builder) void {
     //    build_z3.dependOn(&build_cmd.step);
     //}
 
-    const z3_inc = "./z3/src/api";
+    const z3_inc_c = "./z3/src/api";
+    const z3_inc_cpp = "./z3/src/api/c++";
     const z3_lib = "./z3/build";
     const proof_folder = "./src/pcrt";
     const exe = b.addExecutable("runProofs", null);
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.linkLibCpp();
-    exe.addIncludePath(z3_inc);
+    exe.addIncludePath(z3_inc_c);
+    exe.addIncludePath(z3_inc_cpp);
     exe.addLibPath(z3_lib);
     exe.linkSystemLibraryName("z3");
     exe.addIncludePath(proof_folder); // this also makes the header usable
@@ -68,13 +70,13 @@ pub fn build(b: *std.build.Builder) void {
 
     // TODO make system libs usable
     // system lib paths, which pkg-config does not provide for inclusion
-    //const z3_inc = "/usr/include";
+    //const z3_inc_c = "/usr/include";
     //const z3_lib = "/usr/lib";
     //const exe = b.addExecutable("example", null);
     //exe.setBuildMode(mode);
     //exe.install();
     //exe.linkLibCpp();
-    //exe.addSystemIncludeDir(z3_inc);
+    //exe.addSystemIncludeDir(z3_inc_c);
     //exe.addLibPath(z3_lib);
     //exe.linkSystemLibraryName("z3");
     //exe.addCSourceFile("src/pcrt/min.cpp", &[_][]const u8{});
