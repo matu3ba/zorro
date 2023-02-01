@@ -1,21 +1,22 @@
 const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
-    // Standard target options allows the person running `zig build` to choose
-    // what target to build for. Here we do not override the defaults, which
-    // means any target is allowed, and the default is native. Other options
-    // for restricting supported target set are available.
     const target = b.standardTargetOptions(.{});
-    // Standard release options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall.
-    const mode = b.standardReleaseOptions();
+    const optimize = b.standardOptimizeOption(.{});
 
-    const lib = b.addStaticLibrary("zorro", "src/main.zig");
-    lib.setBuildMode(mode);
+    const lib = b.addStaticLibrary(.{
+        .name = "zorro",
+        .root_source_file = .{ .path = "src/main.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
     lib.install();
 
-    const main_tests = b.addTest("src/main.zig");
-    main_tests.setBuildMode(mode);
+    const main_tests = b.addTest(.{
+        .root_source_file = .{ .path = "src/main.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
 
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&main_tests.step);
@@ -47,13 +48,15 @@ pub fn build(b: *std.build.Builder) void {
     const z3_inc_cpp = "./z3/src/api/c++";
     const z3_lib = "./z3/build";
     const proof_folder = "./src/pcrt";
-    const exe = b.addExecutable("runProofs", null);
-    exe.setTarget(target);
-    exe.setBuildMode(mode);
+    const exe = b.addExecutable(.{
+        .name = "runProofs",
+        .target = target,
+        .optimize = optimize,
+    });
     exe.linkLibCpp();
     exe.addIncludePath(z3_inc_c);
     exe.addIncludePath(z3_inc_cpp);
-    exe.addLibPath(z3_lib);
+    exe.addLibraryPath(z3_lib);
     exe.linkSystemLibraryName("z3");
     exe.addIncludePath(proof_folder); // this also makes the header usable
     exe.addCSourceFile("src/pcrt/mulv.cpp", &[_][]const u8{});
@@ -73,7 +76,6 @@ pub fn build(b: *std.build.Builder) void {
     //const z3_inc_c = "/usr/include";
     //const z3_lib = "/usr/lib";
     //const exe = b.addExecutable("example", null);
-    //exe.setBuildMode(mode);
     //exe.install();
     //exe.linkLibCpp();
     //exe.addSystemIncludeDir(z3_inc_c);

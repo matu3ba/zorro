@@ -28,7 +28,11 @@ git clone --depth=1 https://github.com/Z3Prover/z3 z3
 cd z3
 mkdir -p build
 cd build
+# regular
+CC='zig cc -fno-sanitize=all' CXX='zig c++ -fno-sanitize=all' cmake -GNinja ../
+# if checking for UB
 CC='zig cc' CXX='zig c++' cmake -GNinja ../
+# checking for UB
 ninja          # build z3 with libclang integrated in zig
 cd ..
 
